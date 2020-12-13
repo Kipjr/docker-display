@@ -75,7 +75,7 @@ ADD 99-calibration.conf /etc/X11/xorg.conf.d/
 # Set user to pi
 #
 RUN usermod -a -G input pi 
-#USER pi # if commented then touchscreen works?
+USER pi
 WORKDIR /home/pi
 
 CMD ["bash", "start.sh"]
