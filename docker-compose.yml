@@ -47,6 +47,7 @@ services:
        - "/dev/tty1:/dev/tty1"
        - "/dev/tty2:/dev/tty2"
     environment:
+       - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
     volumes:
@@ -59,7 +60,7 @@ services:
       - "sys_tty_config"
       - "cap_sys_module"
       - "cap_sys_rawio"
-    cap-drop:
+    cap_drop:
       - "SYS_TIME"
     restart: unless-stopped
     privileged: true
