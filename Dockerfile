@@ -23,6 +23,22 @@ RUN apt-get update \
    unclutter \ 
    chromium-browser
 
+
+#
+# Install dependencies 
+#
+
+RUN apt-get install --no-install-recommends -y \ 
+   dbus-x11 \
+   xserver-xorg-legacy \
+   xserver-xorg-input-synaptics \
+   xserver-xorg-input-evdev \
+   xserver-xorg-input-mouse \
+   x11-xserver-utils \
+   xserver-xorg-video-all \
+   xserver-common \
+   && apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 #
 # Add files
 #
@@ -45,21 +61,6 @@ RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
   && echo 'exec /usr/bin/X -s 0 dpms  -nolisten tcp "$@"' >> /etc/X11/xinit/xserverrc
   #&& echo 'exec /usr/bin/X -s 0 dpms -nocursor -nolisten tcp "$@"' >> /etc/X11/xinit/xserverrc
 
-#
-# Install dependencies 
-#
-
-RUN apt-get install --no-install-recommends -y \ 
-   dbus-x11 \
-   xserver-xorg-legacy \
-   xserver-xorg-input-synaptics \
-   xserver-xorg-input-evdev \
-   xserver-xorg-input-mouse \
-   x11-xserver-utils \
-   xserver-xorg-video-all \
-   xserver-common \
-   usbutils \
-   && apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #
 # Add mouse support

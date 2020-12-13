@@ -45,9 +45,6 @@ services:
        - "/dev/input/:/dev/input/"
        - "/dev/tty0:/dev/tty0"
        - "/dev/tty1:/dev/tty1"
-       - "/dev/tty2:/dev/tty2"
-       - "/dev/tty3:/dev/tty3"
-       - "/dev/tty4:/dev/tty4"
     environment:
        - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
@@ -57,7 +54,7 @@ services:
        - /var/run/dbus:/var/run/dbus #needed for something
        - /run/udev/data:/run/udev/data #needed for input
     cap_add:
-      - "cap_sys_admin"
+      - "cap_sys_admin" #needed for modeset(0): drmSetMaster failed: Permission denied
     restart: unless-stopped
     privileged: false
     networks:

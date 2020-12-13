@@ -1,12 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 #xset -display 127.0.0.1:0 +dpms 0 0 300
 #xset -display 127.0.0.1:0 s 0 0
 #xset -display 127.0.0.1:0 s noblank
 #xset -display 127.0.0.1:0 s noexpose
 
 unclutter &
-chromium-browser https://home.koetsier.dev --window-size=1024,600 \
-  --window-position=0,0 \
+exec chromium-browser https://home.koetsier.dev --window-size=1024,600 \
   --start-fullscreen \
   --kiosk \
   --incognito \
@@ -20,5 +19,5 @@ chromium-browser https://home.koetsier.dev --window-size=1024,600 \
   --disable-features=TranslateUI \
   --disk-cache-dir=/dev/null \
   --overscroll-history-navigation=0 \
-  --disable-pinch
+  --disable-pinch 
 
