@@ -5,7 +5,7 @@
 #xset -display 127.0.0.1:0 s noexpose
 
 #unclutter &
-chromium-browser https://home.koetsier.dev   --no-sandbox --window-size=1024,600 \
+chromium-browser https://home.koetsier.dev  --no-sandbox --window-size=1024,600 \
   --window-position=0,0 \
   --start-fullscreen \
   --kiosk \

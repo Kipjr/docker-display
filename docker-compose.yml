@@ -56,8 +56,11 @@ services:
        - /run/udev/data:/run/udev/data
     cap_add:
       - "cap_sys_admin"
+      - "sys_tty_config"
       - "cap_sys_module"
       - "cap_sys_rawio"
+    cap-drop:
+      - "SYS_TIME"
     restart: unless-stopped
     privileged: true
     networks:
