@@ -19,6 +19,8 @@ RUN apt-get update \
    xserver-xorg-video-fbdev  \
    xserver-xorg-core \
    xserver-xorg \
+   xserver-xorg-legacy \
+   x11-xserver-utils \
    xinit \
    unclutter \ 
    chromium-browser
@@ -28,16 +30,14 @@ RUN apt-get update \
 # Install dependencies 
 #
 
-RUN apt-get install --no-install-recommends -y \ 
-   dbus-x11 \
-   xserver-xorg-legacy \
-   xserver-xorg-input-synaptics \
-   xserver-xorg-input-evdev \
-   xserver-xorg-input-mouse \
-   x11-xserver-utils \
-   xserver-xorg-video-all \
-   xserver-common \
-   && apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
+#RUN apt-get install --no-install-recommends -y \ 
+#   dbus-x11 \
+#   xserver-xorg-input-synaptics \
+#   xserver-xorg-input-evdev \
+#   xserver-xorg-input-mouse \
+#   xserver-xorg-video-all \
+#   xserver-common 
+#   && apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #
 # Add files

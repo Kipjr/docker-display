@@ -47,6 +47,12 @@ services:
        - "/dev/tty1:/dev/tty1"
        - "/dev/tty2:/dev/tty2"
        - "/dev/tty3:/dev/tty3"
+       - "/dev/tty4:/dev/tty4"
+       - "/dev/tty5:/dev/tty5"
+       - "/dev/tty6:/dev/tty6"
+       - "/dev/tty7:/dev/tty7"
+       - "/dev/tty8:/dev/tty8"
+       - "/dev/tty9:/dev/tty9"
     environment:
        - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
