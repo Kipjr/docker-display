@@ -58,6 +58,7 @@ services:
        - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
+       - URL=http://www.google.com
     volumes:
        - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
@@ -73,36 +74,3 @@ services:
 networks:
   net:
     driver: bridge
-
-
-
-
-# version: '3.8'
-# services:
-
-#   #Display
-#   display:
-#     hostname: display
-#     build: .
-#     container_name: display
-#     ipc: host
-#     devices:
-#        - "/dev/tty0:/dev/tty0"
-#     environment:
-#        - DISPLAY=localhost:0
-#        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
-#     volumes:
-#        - /tmp/.X11-unix:/tmp/.X11-unix
-#        - /lib/modules:/lib/modules
-#        - /run/dbus:/host/run/dbus
-#        #- /host/run/dbus/system_bus_socket:/host/run/dbus/system_bus_socket
-#     restart: unless-stopped
-#     privileged: true
-#     networks:
-#       - net
-
-# #Docker Networks
-# networks:
-#   net:
-#     driver: bridge
-    
