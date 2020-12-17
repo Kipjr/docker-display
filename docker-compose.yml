@@ -58,7 +58,9 @@ services:
        - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
-       - URL=http://www.google.com
+       - URL=http://home-assistant:8123
+       - WIDTH=1152
+       - HEIGHT=864
     volumes:
        - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
@@ -69,8 +71,12 @@ services:
     privileged: false
     networks:
       - net
+      - intranet
 
 #Docker Networks
 networks:
   net:
     driver: bridge
+  intranet: 
+    external:
+      name: intranet

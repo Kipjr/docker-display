@@ -31,6 +31,7 @@ RUN apt-get update \
 
 # Set display and open Chromium-browser
 ADD .xinitrc /home/pi/
+RUN chown pi:pi /home/pi/.xinitrc
 # create config folder
 RUN mkdir -p /etc/X11/xorg.conf.d 
 
@@ -48,6 +49,7 @@ RUN echo "#!/bin/bash" > /home/pi/start.sh \
   && echo 'startx "/home/pi/.xinitrc"' >> /home/pi/start.sh
 
 RUN echo 'allowed_users=anybody' > /etc/X11/Xwrapper.config
+RUN chown pi:pi /home/pi/start.sh && chmod +x /home/pi/start.sh
 
 #
 # Add mouse support
