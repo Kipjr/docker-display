@@ -33,7 +33,7 @@ services:
   display:
     hostname: display
     build: .
-    image: docker.pkg.github.com/kipjr/docker-display/image:latest
+    image: docker.pkg.github.com/kipjr/docker-display/docker-display-image:latest
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
     devices:
@@ -59,8 +59,8 @@ services:
        - DISPLAY=:0
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
        - URL=http://home-assistant:8123
-       - WIDTH=1152
-       - HEIGHT=864
+       - WIDTH=1366
+       - HEIGHT=800
     volumes:
        - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
@@ -75,8 +75,15 @@ services:
 
 #Docker Networks
 networks:
-  net:
-    driver: bridge
-  intranet: 
+  intranet:
     external:
       name: intranet
+  net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 192.168.8.24/29 #192.168.8.25 - 192.168.8.30 (bc:31)
+    driver_opts:
+     com.docker.network.bridge.name: display_net
+
