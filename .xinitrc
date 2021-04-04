@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-xset -dpms
+#xset -dpms
 xset s off
-xset s noblank
-
+#xset s noblank
+xrandr --output HDMI-1 --rotate inverted
 unclutter &
 chromium-browser $URL \
   --window-size=$WIDTH,$HEIGHT \
