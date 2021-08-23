@@ -3,7 +3,7 @@ services:
   display:
     hostname: display
     build: .
-    image: docker.pkg.github.com/kipjr/docker-display/docker-display-image:latest
+    #image: docker.pkg.github.com/kipjr/docker-display/docker-display-image:latest
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
     devices:
@@ -28,9 +28,28 @@ services:
        - 'TZ=Europe/Amsterdam'
        - DISPLAY=:0
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
+       - MQTT_HOST=192.168.1.4
+       - MQTT_PORT=1433
+       - MQTT_TOPIC=scripts/display/power
        - URL=http://home-assistant:8123
        - WIDTH=1366
        - HEIGHT=800
+       - CHROMIUMFLAGS=|
+          --window-position=0,0 \
+          --start-fullscreen \
+          --kiosk \ 
+          --incognito \ 
+          --noerrdialogs \ 
+          --disable-translate \ 
+          --no-first-run \ 
+          --fast \ 
+          --fast-start \ 
+          --disable-infobars \
+          --disable-features=TranslateUI \
+          --disk-cache-dir=/tmp/chromium \
+          --overscroll-history-navigation=0 \
+          --disable-pinch
+
     volumes:
        - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
