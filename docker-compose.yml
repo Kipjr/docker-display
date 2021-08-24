@@ -2,7 +2,7 @@ version: '3.8'
 services:
   display:
     hostname: display
-    build: .
+    build: src
     #image: docker.pkg.github.com/kipjr/docker-display/docker-display-image:latest
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
