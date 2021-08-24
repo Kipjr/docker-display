@@ -23,7 +23,8 @@ RUN apt-get update \
    x11-xserver-utils \
    xinit \
    unclutter \ 
-   chromium-browser
+   chromium-browser \
+   mosquitto-clients
 
 #
 # Add files
@@ -31,9 +32,18 @@ RUN apt-get update \
 
 # Set display and open Chromium-browser
 ADD .xinitrc /home/pi/
-RUN chown pi:pi /home/pi/.xinitrc
+RUN chown pi:pi -R /home/pi/
 # create config folder
 RUN mkdir -p /etc/X11/xorg.conf.d 
+
+#
+# set mqtt 
+#
+ADD display-power.sh /home/pi/ 
+RUN chmod +x /home/pi/display-power.sh
+ADD mqtt.sh /home/pi/ 
+RUN chmod +x /home/pi/mqtt.sh
+
 
 #
 # set X settings
@@ -46,6 +56,7 @@ RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
 RUN echo "#!/bin/bash" > /home/pi/start.sh \
   && echo "" >> /home/pi/start.sh \
   && echo 'rm /tmp/.X0-lock &>/dev/null || true' >> /home/pi/start.sh \
+  && echo ' "( /home/pi/mqtt.sh ) &"' >> /home/pi/start.sh \
   && echo 'startx "/home/pi/.xinitrc"' >> /home/pi/start.sh
 
 RUN echo 'allowed_users=anybody' > /etc/X11/Xwrapper.config
