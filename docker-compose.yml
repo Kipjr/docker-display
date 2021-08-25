@@ -57,8 +57,8 @@ services:
        - ./logs:/var/log
     cap_add:
       - "cap_sys_admin" #needed for modeset(0): drmSetMaster failed: Permission denied
-    restart: unless-stopped
-    privileged: true 
+    #restart: unless-stopped
+    privileged: false
     networks:
       - net
       - intranet
