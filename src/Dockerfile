@@ -26,6 +26,8 @@ RUN apt-get update \
    chromium-browser \
    mosquitto-clients
 
+RUN apt-get autoremove -y
+
 #
 # Add files
 #
