@@ -2,7 +2,7 @@
 # docker-display
 Docker container to display Chromium-browser for kiosk-applications
 
-Size:  881MB
+Size:  647MB
 
 ## Issues:
 

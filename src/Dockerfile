@@ -15,12 +15,13 @@ RUN usermod -a -G tty pi
 #
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+ && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
    xserver-xorg-video-fbdev  \
    xserver-xorg-core \
    xserver-xorg \
    xserver-xorg-legacy \
    x11-xserver-utils \
+   libgtk-3-bin \
    xinit \
    unclutter \ 
    chromium-browser \
