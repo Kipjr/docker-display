@@ -34,22 +34,7 @@ services:
        - URL=http://home-assistant:8123
        - WIDTH=1366
        - HEIGHT=800
-       - CHROMIUMFLAGS=|
-          --window-position=0,0 \
-          --start-fullscreen \
-          --kiosk \ 
-          --incognito \ 
-          --noerrdialogs \ 
-          --disable-translate \ 
-          --no-first-run \ 
-          --fast \ 
-          --fast-start \ 
-          --disable-infobars \
-          --disable-features=TranslateUI \
-          --disk-cache-dir=/tmp/chromium \
-          --overscroll-history-navigation=0 \
-          --disable-pinch
-
+       - CHROMIUMFLAGS='--window-position=0,0 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/tmp/chromium --overscroll-history-navigation=0 --disable-pinch'
     volumes:
        - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
