@@ -2,7 +2,7 @@
 # docker-display
 Docker container to display Chromium-browser for kiosk-applications
 
-Size:  484MB
+Size:  881MB
 
 ## Issues:
 
@@ -21,7 +21,15 @@ Size:  484MB
 - hdmi_mode=87
 - hdmi_cvt 1024 600 60 6 0 0 0
 
+# docker-compose.yml
 
+- MQTT_HOST=192.168.1.1
+- MQTT_PORT=1433
+- MQTT_TOPIC=scripts/display/power
+- URL=http://Google.nl
+- WIDTH=1366
+- HEIGHT=800
+- CHROMIUMFLAGS='--window-position=0,0 --start-fullscreen --kiosk --incognito'
 
 ## Sources
 
