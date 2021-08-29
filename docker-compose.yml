@@ -36,13 +36,11 @@ services:
        - HEIGHT=800
        - CHROMIUMFLAGS='--window-position=0,0 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/tmp/chromium --overscroll-history-navigation=0 --disable-pinch'
     volumes:
-       - /tmp/.X11-unix:/tmp/.X11-unix #display
        - /var/run/dbus:/var/run/dbus #needed for something
        - /run/udev/data:/run/udev/data #needed for input
        - ./logs:/var/log
     cap_add:
       - "cap_sys_admin" #needed for modeset(0): drmSetMaster failed: Permission denied
-    #restart: unless-stopped
     privileged: false
     networks:
       - net
