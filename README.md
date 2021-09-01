@@ -31,6 +31,27 @@ Size:  647MB
 - HEIGHT=800
 - CHROMIUMFLAGS='--window-position=0,0 --start-fullscreen --kiosk --incognito'
 
+## Cause of size
+    5399  adwaita-icon-theme
+    5647  ubuntu-mono
+    6052  coreutils
+    6656  dpkg
+    7328  perl-base
+    7641  udev
+    7757  libpython3.6-stdlib
+    8034  libgtk-3-0
+    8940  python3.6-minimal
+    9494  libc6
+   17973  cpp-7
+   18501  perl-modules-5.26
+   20754  humanity-icon-theme
+   20989  libperl5.26
+   22734  chromium-browser-l10n
+   31180  libicu60
+   63643  libllvm10
+  270690  chromium-browser
+  524642  libgl1-mesa-dri
+
 ## Sources
 
 
