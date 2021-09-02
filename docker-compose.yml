@@ -30,7 +30,7 @@ services:
        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
        - MQTT_HOST=192.168.1.4
        - MQTT_PORT=1433
-       - MQTT_TOPIC=scripts/display/power
+       - MQTT_TOPIC=sensor/display/power
        - URL=http://home-assistant:8123
        - WIDTH=1366
        - HEIGHT=800
