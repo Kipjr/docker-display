@@ -6,7 +6,7 @@ Size:  647MB
 
 ## Issues:
 
-- None
+- Size? 
 
 ## Hardware
 - Raspberry Pi 4 (4GB)
@@ -25,11 +25,11 @@ Size:  647MB
 
 - MQTT_HOST=192.168.1.1
 - MQTT_PORT=1433
-- MQTT_TOPIC=scripts/display/power
+- MQTT_TOPIC=sensor/display/power
 - URL=http://Google.nl
 - WIDTH=1366
 - HEIGHT=800
-- CHROMIUMFLAGS='--window-position=0,0 --start-fullscreen --kiosk --incognito'
+- CHROMIUMFLAGS='--start-fullscreen --kiosk --incognito'
 
 ## Cause of size
     5399  adwaita-icon-theme
