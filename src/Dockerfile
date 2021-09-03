@@ -13,7 +13,6 @@ RUN usermod -a -G tty pi
 #
 # Install core 
 #
-
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
    xserver-xorg-video-fbdev  \
@@ -23,7 +22,7 @@ RUN apt-get update \
    x11-xserver-utils \
    libgtk-3-bin \
    xinit \
-   unclutter \ 
+   unclutter \
    chromium-browser \
    mosquitto-clients
 
@@ -44,14 +43,20 @@ ADD 45-evdev.conf /etc/X11/xorg.conf.d/
 ADD 99-calibration.conf /etc/X11/xorg.conf.d/
 ADD Xwrapper.config /etc/X11/
 
-RUN chown pi:pi -R /home/pi/
 RUN chmod +x /home/pi/*.sh
 RUN chmod 0750 /home/pi/.x*
 
+#
 #set user
+#
+
 RUN usermod -a -G input pi 
-USER pi
 WORKDIR /home/pi
+RUN mkdir -p /home/pi/.config/chromium
+RUN chown pi:pi -R /home/pi/
+VOLUME /home/pi/.config/chromium
+
+USER pi
 
 CMD ["bash", "start.sh"]
 #CMD ["tail", "-f","/dev/null"]
