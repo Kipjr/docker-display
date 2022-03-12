@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
+#FROM ubuntu:20.04
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #
 # User Actions
@@ -13,7 +13,11 @@ RUN usermod -a -G tty pi
 #
 # Install core 
 #
-RUN apt-get update \
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+mkdir -p /etc/X11/xorg.conf.d && \
+echo $TZ > /etc/timezone && \
+apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
    xserver-xorg-video-fbdev  \
    xserver-xorg-core \
@@ -26,13 +30,9 @@ RUN apt-get update \
    chromium-browser \
    mosquitto-clients
 
-RUN apt-get autoremove -y
-
 #
 # Add files
 #
-
-RUN mkdir -p /etc/X11/xorg.conf.d 
 
 ADD .xinitrc /home/pi/
 ADD .xserverrc /home/pi/
@@ -43,17 +43,12 @@ ADD 45-evdev.conf /etc/X11/xorg.conf.d/
 ADD 99-calibration.conf /etc/X11/xorg.conf.d/
 ADD Xwrapper.config /etc/X11/
 
-RUN chmod +x /home/pi/*.sh
-RUN chmod 0750 /home/pi/.x*
-
-#
-#set user
-#
-
-RUN usermod -a -G input pi 
+RUN chmod +x /home/pi/*.sh && \
+	chmod 0750 /home/pi/.x* && \
+	usermod -a -G input pi && \
+	mkdir -p /home/pi/.config/chromium && \
+	chown pi:pi -R /home/pi/
 WORKDIR /home/pi
-RUN mkdir -p /home/pi/.config/chromium
-RUN chown pi:pi -R /home/pi/
 VOLUME /home/pi/.config/chromium
 
 USER pi
