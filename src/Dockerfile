@@ -1,6 +1,4 @@
 FROM ubuntu:18.04
-#FROM ubuntu:20.04
-
 
 #
 # User Actions
@@ -16,6 +14,7 @@ RUN usermod -a -G tty pi
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 mkdir -p /etc/X11/xorg.conf.d && \
+mkdir -p /var/log/supervisor && \
 echo $TZ > /etc/timezone && \
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -28,12 +27,13 @@ apt-get update \
    xinit \
    unclutter \
    chromium-browser \
-   mosquitto-clients
+   mosquitto-clients \
+   supervisor
 
 #
 # Add files
 #
-
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
 ADD .xinitrc /home/pi/
 ADD .xserverrc /home/pi/
 ADD display-power.sh /home/pi/ 
@@ -53,5 +53,6 @@ VOLUME /home/pi/.config/chromium
 
 USER pi
 
-CMD ["bash", "start.sh"]
+#CMD ["bash", "start.sh"]
 #CMD ["tail", "-f","/dev/null"]
+CMD ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
