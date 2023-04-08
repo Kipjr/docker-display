@@ -4,9 +4,9 @@ FROM ubuntu:18.04
 # User Actions
 #
 
-RUN useradd -ms /bin/bash pi
-RUN usermod -a -G video pi
-RUN usermod -a -G tty pi
+RUN useradd -ms /bin/bash display
+RUN usermod -a -G video display
+RUN usermod -a -G tty display
 
 #
 # Install core 
@@ -34,24 +34,24 @@ apt-get update \
 # Add files
 #
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
-ADD .xinitrc /home/pi/
-ADD .xserverrc /home/pi/
-ADD display-power.sh /home/pi/ 
-ADD mqtt.sh /home/pi/ 
-ADD start.sh /home/pi/
+ADD .xinitrc /home/display/
+ADD .xserverrc /home/display/
+ADD display-power.sh /home/display/ 
+ADD mqtt.sh /home/display/ 
+ADD start.sh /home/display/
 ADD 45-evdev.conf /etc/X11/xorg.conf.d/
 ADD 99-calibration.conf /etc/X11/xorg.conf.d/
 ADD Xwrapper.config /etc/X11/
 
-RUN chmod +x /home/pi/*.sh && \
-	chmod 0750 /home/pi/.x* && \
-	usermod -a -G input pi && \
-	mkdir -p /home/pi/.config/chromium && \
-	chown pi:pi -R /home/pi/
-WORKDIR /home/pi
-VOLUME /home/pi/.config/chromium
+RUN chmod +x /home/display/*.sh && \
+	chmod 0750 /home/display/.x* && \
+	usermod -a -G input display && \
+	mkdir -p /home/display/.config/chromium && \
+	chown display:display -R /home/display/
+WORKDIR /home/display
+VOLUME /home/display/.config/chromium
 
-USER pi
+USER display
 
 #CMD ["bash", "start.sh"]
 #CMD ["tail", "-f","/dev/null"]

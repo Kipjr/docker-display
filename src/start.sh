@@ -1,3 +1,3 @@
 #!/bin/bash
-/home/pi/mqtt.sh &
+/home/display/mqtt.sh &
 startx
