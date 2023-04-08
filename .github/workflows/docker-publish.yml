@@ -1,6 +1,7 @@
 name: Docker
 
 on:
+  release:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
@@ -42,7 +43,7 @@ jobs:
     needs: test
 
     runs-on: ubuntu-latest
-    if: github.event_name == 'publish'
+    if:  ${{ success() }} && github.event_name == 'publish'
 
     steps:
       - uses: actions/checkout@v2
