@@ -1,9 +1,25 @@
-version: '3.8'
+#Docker Networks
+networks:
+  intranet:
+    external:
+      name: intranet
+  net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 192.168.8.9/29 #192.168.8.10 - 192.168.8.14 (bc:15)
+    driver_opts:
+     com.docker.network.bridge.name: display_net
+
+volumes:
+  chromium-data:
+
 services:
   display:
     hostname: display
     build: src
-    #image: docker.pkg.github.com/kipjr/docker-display/docker-display-image:latest
+    image: ghcr.io/kipjr/docker-display/docker-display-image:latest
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
     devices:
@@ -34,32 +50,16 @@ services:
        - URL=http://home-assistant:8123
        - WIDTH=1366
        - HEIGHT=800
-       - CHROMIUMFLAGS=--start-fullscreen --kiosk --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/tmp/chromium --overscroll-history-navigation=0 --disable-pinch
+       - CHROMIUMFLAGS=--start-fullscreen --kiosk --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disable-cache --disk-cache-dir=/dev/null --disk-cache-size=1 --overscroll-history-navigation=0 --disable-pinch --disable-overlay-scrollbar
     volumes:
        - /var/run/dbus:/var/run/dbus #needed for something
        - /run/udev/data:/run/udev/data #needed for input
-       - ./logs:/var/log
        - chromium-data:/home/pi/.config/chromium
     cap_add:
       - "cap_sys_admin" #needed for modeset(0): drmSetMaster failed: Permission denied
     privileged: false
+    restart: unless-stopped
     networks:
       - net
       - intranet
 
-#Docker Networks
-networks:
-  intranet:
-    external:
-      name: intranet
-  net:
-    driver: bridge
-    ipam:
-     driver: default
-     config:
-       - subnet: 192.168.8.24/29 #192.168.8.25 - 192.168.8.30 (bc:31)
-    driver_opts:
-     com.docker.network.bridge.name: display_net
-
-volumes:
-  chromium-data:
