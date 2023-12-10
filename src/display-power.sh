@@ -43,6 +43,10 @@ case $1 in
     xset -display $DISPLAY -dpms # EnergyStar Features off
     ;;
 
+  *)
+    xset -display $DISPLAY "$1" # other
+    ;;
+
 esac
 
 # Screen Saver:
