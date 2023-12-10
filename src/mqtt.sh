@@ -1,7 +1,7 @@
 #!/bin/bash
 while true  # Keep an infinite loop to reconnect when connection lost/broker unavailable
 do
-    mosquitto_sub -h "${MQTT_HOST}" -t "${MQTT_TOPIC}" | while read -r payload
+    mosquitto_sub -h "${MQTT_HOST}" -t "${MQTT_TOPIC}" -u "${MQTT_USERNAME:-adminuser}" -P "${MQTT_PASSWORD}"| while read -r payload
     do
         echo "mosquitto_sub -h ${MQTT_HOST} -t ${MQTT_TOPIC}"
         echo "${payload}"

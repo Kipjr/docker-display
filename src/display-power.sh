@@ -36,11 +36,11 @@ case $1 in
      ;;
 
   dpmson)
-    +dpms # EnergyStar Features on
+    xset -display $DISPLAY +dpms # EnergyStar Features on
     ;;
 
   dpmsoff)
-    -dpms # EnergyStar Features off
+    xset -display $DISPLAY -dpms # EnergyStar Features off
     ;;
 
 esac
