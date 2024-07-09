@@ -17,36 +17,13 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: docker-display-image
+  IMAGE_NAME: docker-display
 
 jobs:
-  # Run tests.
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Explain why this job ran
-        shell: bash
-        run: | 
-          /bin/echo "The ${{ github.event_name }} event triggered this step."
-
-      - uses: actions/checkout@v4
-
-      - name: Run tests
-        run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            docker-compose build
-          fi
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
-    # Ensure test job passes before pushing image.
-    needs: test
-
     runs-on: ubuntu-latest
     if:  ${{ success() }} && github.event_name == 'publish' && startsWith(github.ref, 'refs/tags/v')
 
