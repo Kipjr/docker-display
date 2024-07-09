@@ -80,7 +80,6 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6.3.0
         with:
-          file: ./Dockerfile
           context: ./src
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/arm64/v8
