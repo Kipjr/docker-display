@@ -1,4 +1,7 @@
-![Docker](https://github.com/Kipjr/docker-display/workflows/Docker/badge.svg)
+
+[![Codacy Security Scan](https://github.com/Kipjr/docker-display/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/Kipjr/docker-display/actions/workflows/codacy-analysis.yml)
+[![Docker](https://github.com/Kipjr/docker-display/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Kipjr/docker-display/actions/workflows/docker-publish.yml)
+
 # docker-display
 Docker container to display Chromium-browser for kiosk-applications
 
@@ -14,15 +17,15 @@ Size:  647MB
 
 ## Configration
 
-# /boot/config.txt
-
-- max_usb_current=1
-- hdmi_group=2
-- hdmi_mode=87
-- hdmi_cvt 1024 600 60 6 0 0 0
-
-# docker-compose.yml
-
+### /boot/config.txt
+```
+max_usb_current=1
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt 1024 600 60 6 0 0 0
+```
+### Docker environment variables 
+```
 - MQTT_HOST=192.168.1.1
 - MQTT_PORT=1433
 - MQTT_TOPIC=sensor/display/power
@@ -30,8 +33,9 @@ Size:  647MB
 - WIDTH=1366
 - HEIGHT=800
 - CHROMIUMFLAGS='--start-fullscreen --kiosk --incognito'
-
+```
 ## Cause of size
+```
     5399  adwaita-icon-theme
     5647  ubuntu-mono
     6052  coreutils
@@ -51,7 +55,7 @@ Size:  647MB
    63643  libllvm10
   270690  chromium-browser
   524642  libgl1-mesa-dri
-
+```
 ## Sources
 
 
