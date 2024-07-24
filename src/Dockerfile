@@ -1,5 +1,5 @@
-FROM ubuntu:18.04
-
+ARG VERSION_UBUNTU=18.04
+FROM ubuntu:${VERSION_UBUNTU}
 #
 # User Actions
 #
