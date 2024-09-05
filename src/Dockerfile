@@ -34,21 +34,28 @@ apt-get update \
 #
 # Add files
 #
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
-COPY --chown=display preferences.json /home/display/.config/chromium/Default/Pref
-ADD .xinitrc /home/display/
-ADD .xserverrc /home/display/
-ADD display-power.sh /home/display/ 
-ADD mqtt.sh /home/display/ 
-ADD start.sh /home/display/
-ADD 45-evdev.conf /etc/X11/xorg.conf.d/
-ADD 99-calibration.conf /etc/X11/xorg.conf.d/
-ADD Xwrapper.config /etc/X11/
-ADD supervisord.conf /etc/supervisor/conf.d/chromium.conf
+RUN --mount=type=bind,source=./,target=/mnt \
+  cd /mnt && \
+  cp .xserverrc /home/display/ && \
+  cp .xinitrc /home/display/ && \
+  cp display-power.sh /home/display/ && \
+  cp mqtt.sh /home/display/ && \
+  cp 99-calibration.conf /etc/X11/xorg.conf.d/ && \
+  cp 45-evdev.conf /etc/X11/xorg.conf.d/ && \
+  cp Xwrapper.config /etc/X11/ && \
+  cp start.sh /home/display/ && \
+  cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
+  if [ "$BROWSER" == 'chromium-browser' ]; then \
+    mkdir -p /home/display/.config/chromium && \
+    cp preferences.json /home/display/.config/chromium/Default/Pref && \
+    cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf \
+  elif [ "$BROWSER" == 'firefox' ]; then
+    echo 1
+  fi
+
 RUN chmod +x /home/display/*.sh && \
 	chmod 0750 /home/display/.x* && \
 	usermod -a -G input display && \
-	mkdir -p /home/display/.config/chromium && \
 	chown display:display -R /home/display/
 WORKDIR /home/display
 VOLUME /home/display/.config/chromium
