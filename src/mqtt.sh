@@ -6,7 +6,7 @@ do
         echo "mosquitto_sub -h ${MQTT_HOST} -t ${MQTT_TOPIC}"
         echo "${payload}"
         # Here is the callback to execute whenever you receive a message:
-        ./display-power.sh ${payload}
+        ./display-power.sh "${payload}"
     done
     sleep 10  # Wait 10 seconds until reconnection
 done 
