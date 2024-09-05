@@ -1,3 +1,4 @@
+ARG BROWSER=chromium-browser
 ARG VERSION_UBUNTU=18.04
 FROM ubuntu:${VERSION_UBUNTU}
 #
@@ -26,7 +27,7 @@ apt-get update \
    libgtk-3-bin \
    xinit \
    unclutter \
-   chromium-browser \
+   ${BROWSER} \
    mosquitto-clients \
    supervisor
 
