@@ -34,6 +34,7 @@ apt-get update \
 # Add files
 #
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
+COPY --chown=display preferences.json /home/display/.config/chromium/Default/Pref
 ADD .xinitrc /home/display/
 ADD .xserverrc /home/display/
 ADD display-power.sh /home/display/ 
@@ -42,7 +43,7 @@ ADD start.sh /home/display/
 ADD 45-evdev.conf /etc/X11/xorg.conf.d/
 ADD 99-calibration.conf /etc/X11/xorg.conf.d/
 ADD Xwrapper.config /etc/X11/
-
+ADD supervisord.conf /etc/supervisor/conf.d/chromium.conf
 RUN chmod +x /home/display/*.sh && \
 	chmod 0750 /home/display/.x* && \
 	usermod -a -G input display && \
