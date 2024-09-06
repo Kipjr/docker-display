@@ -86,7 +86,7 @@ jobs:
             type=semver,pattern={{raw}}
             type=raw,value=${{ env.VERSION_UBUNTU }}-{{date 'YYYYMMDD-hhmmss' tz='Europe/Amsterdam'}}
             type=raw,value=${{ env.VERSION_UBUNTU }}-{{sha}}
-            type=raw,value=${{ env.VERSION_UBUNTU }}
+            type=raw,value=${{ env.VERSION_UBUNTU }}-${{ env.BROWSER }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
