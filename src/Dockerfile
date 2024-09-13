@@ -16,7 +16,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 mkdir -p /etc/X11/xorg.conf.d && \
 mkdir -p /var/log/supervisor && \
 echo $TZ > /etc/timezone && \
-if [ ${OS_VERSION} == "debian:bookworm" ];then \
+if [ ${OS_VERSION} == debian:bookworm ];then \
     BROWSER="chromium"; \
 else \
     BROWSER="chromium-browser"; \
