@@ -27,7 +27,7 @@ jobs:
   push:
     strategy:
       matrix:
-        os_version: ["ubuntu:18","debian:bookworm"]
+        os_version: ["ubuntu:18.04","debian:bookworm"]
     runs-on: ubuntu-latest
     if:  ${{ success() }} && github.event_name == 'publish' && startsWith(github.ref, 'refs/tags/v')
 
