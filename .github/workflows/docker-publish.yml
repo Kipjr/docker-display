@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "OS_VERSION=${{ matrix.os_version}}" >> $GITHUB_ENV
       - name: Set environment variables (environment)
-        if: github.event_name != 'workflow_dispatch' || ( ${{ matrix.os_version }} == '')
+        if: github.event_name != 'workflow_dispatch'
         run: |
           echo "OS_VERSION=${{ vars.OS_VERSION }}" >> $GITHUB_ENV
       - uses: actions/checkout@v4
