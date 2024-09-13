@@ -27,7 +27,7 @@ jobs:
   push:
     strategy:
       matrix:
-        version_ubuntu: [18,20,22]
+        os_version: [ubuntu:18,debian:bookworm]
     runs-on: ubuntu-latest
     if:  ${{ success() }} && github.event_name == 'publish' && startsWith(github.ref, 'refs/tags/v')
 
@@ -35,11 +35,11 @@ jobs:
       - name: Set environment variables (workflow)
         if: github.event_name == 'workflow_dispatch'
         run: |
-          echo "VERSION_UBUNTU=${{ matrix.version_ubuntu}}" >> $GITHUB_ENV
+          echo "OS_VERSION=${{ matrix.os_version}}" >> $GITHUB_ENV
       - name: Set environment variables (environment)
-        if: github.event_name != 'workflow_dispatch' || ( ${{ matrix.version_ubuntu }} == '')
+        if: github.event_name != 'workflow_dispatch' || ( ${{ matrix.os_version }} == '')
         run: |
-          echo "VERSION_UBUNTU=${{ vars.VERSION_UBUNTU }}" >> $GITHUB_ENV
+          echo "OS_VERSION=${{ vars.OS_VERSION }}" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -82,9 +82,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=semver,pattern={{raw}}
-            type=raw,value=${{ env.VERSION_UBUNTU }}-{{date 'YYYYMMDD-hhmmss' tz='Europe/Amsterdam'}}
-            type=raw,value=${{ env.VERSION_UBUNTU }}-{{sha}}
-            type=raw,value=${{ env.VERSION_UBUNTU }}
+            type=raw,value=${{ env.OS_VERSION }}-{{date 'YYYYMMDD-hhmmss' tz='Europe/Amsterdam'}}
+            type=raw,value=${{ env.OS_VERSION }}-{{sha}}
+            type=raw,value=${{ env.OS_VERSION }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -98,7 +98,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-             VERSION_UBUNTU=${{ env.VERSION_UBUNTU }}
+             OS_VERSION=${{ env.OS_VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
