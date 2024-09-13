@@ -1,5 +1,5 @@
-ARG VERSION_UBUNTU=18.04
-FROM ubuntu:${VERSION_UBUNTU}
+ARG OS_VERSION=ubuntu:18.04
+FROM ${OS_VERSION}
 #
 # User Actions
 #
