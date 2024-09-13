@@ -4,9 +4,9 @@ FROM ${OS_VERSION}
 # User Actions
 #
 
-RUN useradd -ms /bin/bash display
-RUN usermod -a -G video display
-RUN usermod -a -G tty display
+RUN useradd -ms /bin/bash display && \
+    usermod -a -G video display && \
+    usermod -a -G tty display
 
 #
 # Install core 
@@ -15,7 +15,8 @@ RUN usermod -a -G tty display
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 mkdir -p /etc/X11/xorg.conf.d && \
 mkdir -p /var/log/supervisor && \
-echo $TZ > /etc/timezone && \
+echo $TZ > /etc/timezone && 
+[[ "$OS_VERSION" == "debian:bookworm" ]] && BROWSER=chromium || BROWSER=chromium-browser &&
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
    xserver-xorg-video-fbdev  \
@@ -26,7 +27,7 @@ apt-get update \
    libgtk-3-bin \
    xinit \
    unclutter \
-   chromium-browser \
+   ${BROWSER} \
    mosquitto-clients \
    supervisor
 
