@@ -14,22 +14,22 @@ RUN useradd -ms /bin/bash display && \
 #
 ARG BROWSER=chromium
 RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && \
-mkdir -p /etc/X11/xorg.conf.d && \
-mkdir -p /var/log/supervisor && \
-echo "$TZ" > /etc/timezone && \
-apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-   xserver-xorg-video-fbdev  \
-   xserver-xorg-core \
-   xserver-xorg \
-   xserver-xorg-legacy \
-   x11-xserver-utils \
-   libgtk-3-bin \
-   xinit \
-   unclutter \
-   ${BROWSER} \
-   mosquitto-clients \
-   supervisor && \
+    mkdir -p /etc/X11/xorg.conf.d && \
+    mkdir -p /var/log/supervisor && \
+    echo "$TZ" > /etc/timezone && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    xserver-xorg-video-fbdev  \
+    xserver-xorg-core \
+    xserver-xorg \
+    xserver-xorg-legacy \
+    x11-xserver-utils \
+    libgtk-3-bin \
+    xinit \
+    unclutter \
+    ${BROWSER} \
+    mosquitto-clients \
+    supervisor && \
 apt-get clean -y; && \
 rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
