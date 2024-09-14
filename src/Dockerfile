@@ -1,4 +1,3 @@
-
 ARG OS_VERSION=debian:bookworm
 FROM ${OS_VERSION}
 
@@ -14,10 +13,10 @@ RUN useradd -ms /bin/bash display && \
 # Install core 
 #
 ARG BROWSER=chromium
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && \
 mkdir -p /etc/X11/xorg.conf.d && \
 mkdir -p /var/log/supervisor && \
-echo $TZ > /etc/timezone && \
+echo "$TZ" > /etc/timezone && \
 
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -29,9 +28,7 @@ apt-get update \
    libgtk-3-bin \
    xinit \
    unclutter \
-
    ${BROWSER} \
-
    mosquitto-clients \
    supervisor && \
 apt-get clean -y; && \
@@ -64,12 +61,12 @@ RUN --mount=type=bind,source=./,target=/mnt \
     cp firefox.profiles.ini /home/neko/.mozilla/firefox/profiles.ini; \
   fi; && \
     chmod +x /home/display/*.sh && \
-	chmod 0750 /home/display/.x* && \
-	usermod -a -G input display && \
-	chown display:display -R /home/display/
+    chmod 0750 /home/display/.x* && \
+    usermod -a -G input display && \
+    chown display:display -R /home/display/
+
 WORKDIR /home/display
 VOLUME /home/display/.config/chromium
-
 USER display
 
 #CMD ["bash", "start.sh"]
