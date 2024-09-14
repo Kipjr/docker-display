@@ -52,7 +52,7 @@ RUN --mount=type=bind,source=./,target=/mnt \
         mkdir -p /home/display/.config/chromium \
         && cp chromium-browser.policies.json /etc/chromium/policies/managed/policies.json \
         && cp chromium-browser.preferences.json /home/display/.config/chromium/Default/Pref \
-        && cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf \
+        && cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf; \
     elif [ "$BROWSER" == 'firefox' ]; then \
         cp firefox.supervisord.conf /etc/neko/supervisord/firefox.conf \
         && cp firefox.mozilla.cfg /usr/lib/firefox-esr/mozilla.cfg \
