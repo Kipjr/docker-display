@@ -7,10 +7,7 @@ on: # yamllint disable-line rule:truthy
   pull_request:
 
 permissions: {}
-
-env:
-  LINTER_VERSION: v7.1.0
-  
+ 
 jobs:
   lint-check:
     runs-on: ubuntu-latest
@@ -27,33 +24,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Cache Docker layers for the super-linter image
-      - name: Cache Docker layers
-        id: cache-docker
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.docker-cache
-          key: docker-super-linter-${{ runner.os }}-${{ hashFiles('Dockerfile') }}-${{ env.LINTER_VERSION }}
-          restore-keys: |
-            docker-super-linter-${{ runner.os }}-
-
-      # Load cached Docker layers if available
-      - name: Load Docker cache
-        if: steps.cache-docker.outputs.cache-hit == 'true'
-        run: |
-          docker load -i /tmp/.docker-cache/super-linter.tar || echo "Cache not found."
-
-      # Pull Docker image or use cached layers
-      - name: Pull Super-linter Docker image
-        if: steps.cache-docker.outputs.cache-hit != 'true'
-        run: |
-          docker pull ghcr.io/super-linter/super-linter:${{ env.LINTER_VERSION }}
-          mkdir -p /tmp/.docker-cache
-          docker save ghcr.io/super-linter/super-linter:${{ env.LINTER_VERSION }} -o /tmp/.docker-cache/super-linter.tar
-
       # Run Super-linter
       - name: Super-linter
-        uses: super-linter/super-linter@v7.1.0 # x-release-please-version
+        uses: super-linter/super-linter/slim@v7.1.0 # x-release-please-version
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
