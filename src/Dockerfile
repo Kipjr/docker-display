@@ -31,7 +31,7 @@ RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
         ${BROWSER} \
         mosquitto-clients \
         supervisor \
-    && apt-get clean -y; \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
 #
