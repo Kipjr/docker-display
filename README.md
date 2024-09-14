@@ -6,6 +6,7 @@ Docker container to display Chromium-browser for kiosk-applications
 
 
 ## Issues:
+
 - Size? 
 
 ## Hardware
