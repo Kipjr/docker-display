@@ -38,32 +38,32 @@ RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
 # Add files
 #
 RUN --mount=type=bind,source=./,target=/mnt \
-  cd /mnt && \
-  cp .xserverrc /home/display/ && \
-  cp .xinitrc /home/display/ && \
-  cp display-power.sh /home/display/ && \
-  cp mqtt.sh /home/display/ && \
-  cp 99-calibration.conf /etc/X11/xorg.conf.d/ && \
-  cp 45-evdev.conf /etc/X11/xorg.conf.d/ && \
-  cp Xwrapper.config /etc/X11/ && \
-  cp start.sh /home/display/ && \
-  cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
-  if [ "$BROWSER" == 'chromium' ]; then \
-    mkdir -p /home/display/.config/chromium && \
-    cp chromium-browser.policies.json /etc/chromium/policies/managed/policies.json && \
-    cp chromium-browser.preferences.json /home/display/.config/chromium/Default/Pref && \
-    cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf \
-  elif [ "$BROWSER" == 'firefox' ]; then \
-    cp firefox.supervisord.conf /etc/neko/supervisord/firefox.conf && \
-    cp firefox.mozilla.cfg /usr/lib/firefox-esr/mozilla.cfg && \
-    cp firefox.autoconfig.js /usr/lib/firefox-esr/defaults/pref/autoconfig.js && \
-    cp firefox.policies.json /usr/lib/firefox-esr/distribution/policies.json && \
-    cp firefox.profiles.ini /home/neko/.mozilla/firefox/profiles.ini; \
-  fi; && \
-    chmod +x /home/display/*.sh && \
-    chmod 0750 /home/display/.x* && \
-    usermod -a -G input display && \
-    chown display:display -R /home/display/
+    cd /mnt \
+    && cp .xserverrc /home/display/ \
+    && cp .xinitrc /home/display/ \
+    && cp display-power.sh /home/display/ \
+    && cp mqtt.sh /home/display/ \
+    && cp 99-calibration.conf /etc/X11/xorg.conf.d/ \
+    && cp 45-evdev.conf /etc/X11/xorg.conf.d/ \
+    && cp Xwrapper.config /etc/X11/ \
+    && cp start.sh /home/display/ \
+    && cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
+    && if [ "$BROWSER" == 'chromium' ]; then \
+        mkdir -p /home/display/.config/chromium \
+        && cp chromium-browser.policies.json /etc/chromium/policies/managed/policies.json \
+        && cp chromium-browser.preferences.json /home/display/.config/chromium/Default/Pref \
+        && cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf \
+    elif [ "$BROWSER" == 'firefox' ]; then \
+        cp firefox.supervisord.conf /etc/neko/supervisord/firefox.conf \
+        && cp firefox.mozilla.cfg /usr/lib/firefox-esr/mozilla.cfg \
+        && cp firefox.autoconfig.js /usr/lib/firefox-esr/defaults/pref/autoconfig.js \
+        && cp firefox.policies.json /usr/lib/firefox-esr/distribution/policies.json \
+        && cp firefox.profiles.ini /home/neko/.mozilla/firefox/profiles.ini; \
+    fi \
+    && chmod +x /home/display/*.sh  \
+    && chmod 0750 /home/display/.x*  \
+    && usermod -a -G input display \
+    && chown display:display -R /home/display/
 
 WORKDIR /home/display
 VOLUME /home/display/.config/chromium
