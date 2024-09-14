@@ -49,16 +49,17 @@ RUN --mount=type=bind,source=./,target=/mnt \
     && cp start.sh /home/display/ \
     && cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
     && if [ "$BROWSER" = 'chromium' ]; then \
-        mkdir -p /home/display/.config/chromium \
+        mkdir -p /home/display/.config/chromium/Default /etc/chromium/policies/managed \
         && cp chromium/policies.json /etc/chromium/policies/managed/ \
         && cp chromium/Pref /home/display/.config/chromium/Default/ \
         && cp chromium/chromium.conf /etc/supervisor/conf.d/; \
     elif [ "$BROWSER" = 'firefox' ]; then \
-        cp firefox/firefox.conf /etc/supervisor/conf.d/firefox.conf \
+        mkdir -p /home/display/.mozilla/firefox/ \
+        && cp firefox/firefox.conf /etc/supervisor/conf.d/firefox.conf \
         && cp firefox/mozilla.cfg /usr/lib/firefox-esr/ \
         && cp firefox/autoconfig.js /usr/lib/firefox-esr/defaults/pref/ \
         && cp firefox/policies.json /usr/lib/firefox-esr/distribution/ \
-        && cp firefox/profiles.ini /home/neko/.mozilla/firefox/; \
+        && cp firefox/profiles.ini /home/display/.mozilla/firefox/; \
     fi \
     && chmod +x /home/display/*.sh  \
     && chmod 0750 /home/display/.x*  \

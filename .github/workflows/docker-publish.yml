@@ -32,7 +32,7 @@ jobs:
 
         os_version: ["debian:bookworm"]
 
-        browser: ["firefox","chromium-browser"]
+        browser: ["firefox-esr","chromium"]
 
     runs-on: ubuntu-latest
     if:  ${{ success() }} && github.event_name == 'publish' && startsWith(github.ref, 'refs/tags/v')
