@@ -16,6 +16,8 @@ on:
     branches: [ master ]
   schedule:
     - cron: '28 9 * * 1'
+    
+permissions: read-all
 
 jobs:
   codacy-security-scan:
