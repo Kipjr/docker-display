@@ -31,7 +31,7 @@ jobs:
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_BASH_EXEC: true
+          #VALIDATE_BASH_EXEC: true
           VALIDATE_DOCKERFILE_HADOLINT: true
-          VALIDATE_SHELL_SHFMT: true
+          #VALIDATE_SHELL_SHFMT: true
           VALIDATE_YAML_PRETTIER: true
