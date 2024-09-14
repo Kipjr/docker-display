@@ -18,8 +18,15 @@ volumes:
 services:
   display:
     hostname: display
-    build: src
+
+    
     image: ghcr.io/kipjr/docker-display/docker-display-image:latest
+
+    build:
+      context: src
+      args:
+        BROWSER: ${BROWSER:-chromium}
+
     platform: "linux/arm64/v8"
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
@@ -55,7 +62,7 @@ services:
     volumes:
        - /var/run/dbus:/var/run/dbus #needed for something
        - /run/udev/data:/run/udev/data #needed for input
-       - chromium-data:/home/pi/.config/chromium
+       - chromium-data:/home/display/.config/chromium
     cap_add:
       - "cap_sys_admin" #needed for modeset(0): drmSetMaster failed: Permission denied
     privileged: false
