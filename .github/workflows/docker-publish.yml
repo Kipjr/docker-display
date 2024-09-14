@@ -16,6 +16,8 @@ on:
   # Run tests for any PRs.
   # pull_request:
 
+permissions: read-all
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
