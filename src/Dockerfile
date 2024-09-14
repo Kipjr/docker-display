@@ -17,9 +17,9 @@ mkdir -p /etc/X11/xorg.conf.d && \
 mkdir -p /var/log/supervisor && \
 echo $TZ > /etc/timezone && \
 if [ ${OS_VERSION} = debian:bookworm ];then \
-    export -p BROWSER=chromium; \
+    BROWSER=chromium; \
 else \
-    export -p BROWSER=chromium-browser; \
+    BROWSER=chromium-browser; \
 fi && \
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
