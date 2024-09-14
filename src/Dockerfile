@@ -50,15 +50,15 @@ RUN --mount=type=bind,source=./,target=/mnt \
     && cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
     && if [ "$BROWSER" = 'chromium' ]; then \
         mkdir -p /home/display/.config/chromium \
-        && cp chromium-browser.policies.json /etc/chromium/policies/managed/policies.json \
-        && cp chromium-browser.preferences.json /home/display/.config/chromium/Default/Pref \
-        && cp chromium-browser.supervisord.conf /etc/supervisor/conf.d/chromium.conf; \
+        && cp chromium/policies.json /etc/chromium/policies/managed/ \
+        && cp chromium/Pref /home/display/.config/chromium/Default/ \
+        && cp chromium/chromium.conf /etc/supervisor/conf.d/; \
     elif [ "$BROWSER" = 'firefox' ]; then \
-        cp firefox.supervisord.conf /etc/neko/supervisord/firefox.conf \
-        && cp firefox.mozilla.cfg /usr/lib/firefox-esr/mozilla.cfg \
-        && cp firefox.autoconfig.js /usr/lib/firefox-esr/defaults/pref/autoconfig.js \
-        && cp firefox.policies.json /usr/lib/firefox-esr/distribution/policies.json \
-        && cp firefox.profiles.ini /home/neko/.mozilla/firefox/profiles.ini; \
+        cp firefox/firefox.conf /etc/supervisor/conf.d/firefox.conf \
+        && cp firefox/mozilla.cfg /usr/lib/firefox-esr/ \
+        && cp firefox/autoconfig.js /usr/lib/firefox-esr/defaults/pref/ \
+        && cp firefox/policies.json /usr/lib/firefox-esr/distribution/ \
+        && cp firefox/profiles.ini /home/neko/.mozilla/firefox/; \
     fi \
     && chmod +x /home/display/*.sh  \
     && chmod 0750 /home/display/.x*  \
