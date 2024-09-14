@@ -1,22 +1,24 @@
-ARG BROWSER=chromium-browser
-ARG VERSION_UBUNTU=18.04
-FROM ubuntu:${VERSION_UBUNTU}
+
+ARG OS_VERSION=debian:bookworm
+FROM ${OS_VERSION}
+
 #
 # User Actions
 #
 
-RUN useradd -ms /bin/bash display
-RUN usermod -a -G video display
-RUN usermod -a -G tty display
+RUN useradd -ms /bin/bash display && \
+    usermod -a -G video display && \
+    usermod -a -G tty display
 
 #
 # Install core 
 #
-
+ARG BROWSER=chromium
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 mkdir -p /etc/X11/xorg.conf.d && \
 mkdir -p /var/log/supervisor && \
 echo $TZ > /etc/timezone && \
+
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
    xserver-xorg-video-fbdev  \
@@ -27,7 +29,9 @@ apt-get update \
    libgtk-3-bin \
    xinit \
    unclutter \
+
    ${BROWSER} \
+
    mosquitto-clients \
    supervisor && \
 apt-get clean -y; && \
@@ -47,7 +51,7 @@ RUN --mount=type=bind,source=./,target=/mnt \
   cp Xwrapper.config /etc/X11/ && \
   cp start.sh /home/display/ && \
   cp supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
-  if [ "$BROWSER" == 'chromium-browser' ]; then \
+  if [ "$BROWSER" == 'chromium' ]; then \
     mkdir -p /home/display/.config/chromium && \
     cp chromium-browser.policies.json /etc/chromium/policies/managed/policies.json && \
     cp chromium-browser.preferences.json /home/display/.config/chromium/Default/Pref && \
