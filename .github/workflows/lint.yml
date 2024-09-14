@@ -36,6 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   lint-fix:
+    needs: lint-check
     permissions:
       # To write linting fixes
       contents: write
