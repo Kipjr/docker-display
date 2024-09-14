@@ -16,8 +16,11 @@ on:
   # Run tests for any PRs.
   # pull_request:
 
-permissions: read-all
 
+permissions:
+  contents: read
+  packages: write
+  
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -29,9 +32,7 @@ jobs:
   push:
     strategy:
       matrix:
-
         os_version: ["debian:bookworm"]
-
         browser: ["firefox-esr","chromium"]
 
     runs-on: ubuntu-latest
@@ -41,16 +42,13 @@ jobs:
       - name: Set environment variables (workflow)
         if: github.event_name == 'workflow_dispatch'
         run: |
- 
           echo "OS_VERSION=${{ matrix.os_version}}" >> $GITHUB_ENV
           echo "BROWSER=${{ matrix.browser}}" >> $GITHUB_ENV
  
       - name: Set environment variables (environment)
         if: github.event_name != 'workflow_dispatch'
         run: |
- 
           echo "OS_VERSION=${{ vars.OS_VERSION }}" >> $GITHUB_ENV
- 
           echo "BROWSER=${{ vars.BROWeER }}" >> $GITHUB_ENV
  
       - uses: actions/checkout@v4
