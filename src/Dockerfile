@@ -1,6 +1,8 @@
 ARG OS_VERSION=debian:bookworm
 FROM ${OS_VERSION}
 
+ARG BROWSER=chromium
+ENV BROWSER=${BROWSER}
 #
 # User Actions
 #
@@ -12,7 +14,7 @@ RUN useradd -ms /bin/bash display && \
 #
 # Install core 
 #
-ARG BROWSER=chromium
+
 RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
     && mkdir -p /etc/X11/xorg.conf.d \
     && mkdir -p /var/log/supervisor \
