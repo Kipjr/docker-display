@@ -26,6 +26,7 @@ RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
         xserver-xorg-core \
         xserver-xorg \
         xserver-xorg-legacy \
+        xserver-xorg-input-evdev \
         x11-xserver-utils \
         libgtk-3-bin \
         xinit \
