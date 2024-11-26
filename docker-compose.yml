@@ -1,14 +1,13 @@
 #Docker Networks
 networks:
   intranet:
-    external:
-      name: intranet
+    external: true
   net:
     driver: bridge
     ipam:
      driver: default
      config:
-       - subnet: 192.168.8.9/29 #192.168.8.10 - 192.168.8.14 (bc:15)
+       - subnet: 192.168.8.8/29 #192.168.8.10 - 192.168.8.14 (bc:15)
     driver_opts:
      com.docker.network.bridge.name: display_net
 
@@ -19,12 +18,12 @@ volumes:
 services:
   display:
     hostname: display
-    image: ghcr.io/kipjr/docker-display:debian-bookworm-firefox-esr
+    image: ghcr.io/kipjr/docker-display:ubuntu-2204-firefox-esr
     build:
       context: src
       args:
         BROWSER: ${BROWSER:-firefox-esr}
-        OS_VERSION: ${OS_VERSION:-debian:bookworm}
+        OS_VERSION: ${OS_VERSION:-ubuntu:22.04}
     platform: "linux/arm64/v8"
     container_name: display
     ipc: host # level=error msg="add cg to OOM monitor" error="cgroups: memory cgroup not supported on this system"
@@ -54,9 +53,11 @@ services:
        - MQTT_PORT=1433
        - MQTT_TOPIC=sensor/display/power
        - URL=http://home-assistant:8123
-       - WIDTH=1366
-       - HEIGHT=800
-       - CHROMIUMFLAGS=--start-fullscreen --kiosk --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disable-cache --disk-cache-dir=/dev/null --disk-cache-size=1 --overscroll-history-navigation=0 --disable-pinch --disable-overlay-scrollbar
+       - WIDTH=1024
+       #1366
+       - HEIGHT=600
+       #800
+#       - CHROMIUMFLAGS=--start-fullscreen --kiosk --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disable-cache --disk-cache-dir=/dev/null --disk-cache-size=1 --overscroll-history-navigation=0 --disable-pinch --disable-overlay-scrollbar
     volumes:
        - /var/run/dbus:/var/run/dbus #needed for something
        - /run/udev/data:/run/udev/data #needed for input

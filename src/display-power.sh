@@ -1,5 +1,5 @@
 #!/bin/bash
-DISPLAY=$(pgrep 'Xorg'| grep -Po '(?<= )(:[0-9]+)(?=\ )')
+DISPLAY=$(ps -aux | grep 'Xorg'| grep -Po '(?<= )(:[0-9]+)(?=\ )')
 declare -x DISPLAY="$DISPLAY"
 
 case $1 in

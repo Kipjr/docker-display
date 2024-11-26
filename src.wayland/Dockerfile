@@ -17,7 +17,8 @@ RUN useradd -ms /bin/bash ${USER} && \
 #
 
 RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
-    && mkdir -p /etc/X11/xorg.conf.d \
+#    && mkdir -p /etc/X11/xorg.conf.d \
+    && mkdir -p /etc/xdg/weston \
     && mkdir -p /var/log/supervisor \
     && echo "${TZ:-Europe/Amsterdam}" > /etc/timezone \
     && apt-get update \
@@ -26,42 +27,31 @@ RUN ln -snf "/usr/share/zoneinfo/${TZ:-Europe/Amsterdam}" /etc/localtime \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
     && apt-get  install --no-install-recommends -y \
-        dbus \
-        dbus-x11 \
-        dbus-broker \
-        xserver-xorg-video-fbdev  \
-        xserver-xorg-core \
-        xserver-xorg \
-        xserver-xorg-legacy \
-        xserver-xorg-input-evdev \
-        x11-xserver-utils \
-        openbox \
-        libgtk-3-bin \
-        ${BROWSER} \
-        xinit \
-        xterm \
+        wayland \
+        weston \
         unclutter \
-        supervisor \
+        ${BROWSER} \
         mosquitto-clients \
+        supervisor \
     && apt-get purge -y software-properties-common \
     && apt-get autoremove -y \
     && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/* \
-    && systemctl enable dbus-broker.service \
-    && systemctl --global enable dbus-broker.service
+    && rm -rf /var/lib/apt/lists/*
 
 #
 # Add files
 #
 RUN --mount=type=bind,source=./,target=/mnt \
     cd /mnt \
-    && cp .xserverrc /home/${USER}/ \
-    && cp .xinitrc /home/${USER}/ \
+ #   && cp .xserverrc /home/${USER}/ \
+ #   && cp .xinitrc /home/${USER}/ \
     && cp display-power.sh /home/${USER}/ \
     && cp mqtt.sh /home/${USER}/ \
-    && cp 99-calibration.conf /etc/X11/xorg.conf.d/ \
-    && cp 45-evdev.conf /etc/X11/xorg.conf.d/ \
-    && cp Xwrapper.config /etc/X11/ \
+ #   && cp 99-calibration.conf /etc/X11/xorg.conf.d/ \
+    && cp weston.conf /etc/supervisor/conf.d/ \
+ #   && cp 45-evdev.conf /etc/X11/xorg.conf.d/ \
+ #   && cp Xwrapper.config /etc/X11/ \
+    && cp weston.ini /etc/xdg/weston/ \
     && cp start.sh /home/${USER}/ \
     && cp supervisord.conf /etc/supervisor/supervisord.conf \
     && if [ "$BROWSER" = 'chromium' ]; then \
@@ -80,8 +70,8 @@ RUN --mount=type=bind,source=./,target=/mnt \
     fi \
     && chmod +x /home/${USER}/*.sh  \
     && chmod 0750 /home/${USER}/.x*  \
-    && usermod -a -G input ${USER} \
-    && echo export -p DISPLAY="\$(ps -aux | grep Xorg| grep -Po '(?<= )(:[0-9]+)(?=\ )')" | tee -a /home/${USER}/.bashrc \
+#    && usermod -a -G input ${USER} \
+#    && echo export -p DISPLAY="\$(ps -aux | grep Xorg| grep -Po '(?<= )(:[0-9]+)(?=\ )')" | tee -a /home/${USER}/.bashrc \
     && chown ${USER}:${USER} -R /home/${USER}
 
 
